@@ -43,36 +43,65 @@ public:
 	void Insert(Collider* col)
 	{
 		//Check if the collider intersects with all 4 childs
-		for (int i = 0; i < 4; i++)
+
+		if (childs[0] != NULL)
 		{
-			int collisions = 0;
-			if (col->CheckCollision(childs[i]->rect))
+			for (int i = 0; i < 4; i++)
 			{
-				collisions++;
+				int collisions = 0;
+				if (col->CheckCollision(childs[i]->rect))
+				{
+					collisions++;
+				}
+
+				if (collisions == 4)
+				{
+					objects.PushBack(col);
+					return;
+				}
+
 			}
 
-			if (collisions == 4)
+			for (int i = 0; i < 4; i++)
 			{
-				objects.PushBack(col);
-				return;
-			}
+				if (col->CheckCollision(childs[i]->rect))
+				{
+					childs[i]->Insert(col);
+				}
 
+			}
 		}
-		bool inserted = false;
-		for (int i = 0; i < 4; i++)
-		{
-			if (col->CheckCollision(childs[i]->rect))
-			{
-				childs[i]->Insert(col);
-				bool inserted = true;
-			}
-				
-		} 
-		if (!inserted)
-		{
-			objects.PushBack(col);
 
-		}
+		else
+		{
+				SDL_Rect newChild{ rect.x, rect.y, rect.w / 2, rect.h / 2 };
+				childs[0] = new p2QuadTreeNode(newChild);
+				childs[0]->parent = this;
+
+				childs[1] = new p2QuadTreeNode(newChild);
+				childs[1]->rect.x += rect.w / 2;
+				childs[1]->parent = this;
+
+				childs[2] = new p2QuadTreeNode(newChild);
+				childs[2]->rect.y += rect.h / 2;
+				childs[2]->parent = this;
+
+				childs[3] = new p2QuadTreeNode(newChild);
+				childs[3]->rect.x += rect.w / 2;
+				childs[3]->rect.y += rect.h / 2;
+				childs[3]->parent = this;
+
+				p2DynArray<Collider*> tmp = objects;
+				objects.Clear();
+
+				for (int i = 0; i < tmp.Count(); i++)
+				{
+					Insert(tmp[i]);
+				}
+
+				Insert(col);
+			}
+
 		// TODO: Insertar un nou Collider al quadtree
 		// En principi cada node pot enmagatzemar QUADTREE_MAX_ITEMS nodes (encara que podrien ser més)
 		// Si es detecten més, el node s'ha de tallar en quatre
@@ -83,6 +112,26 @@ public:
 
 	int CollectCandidates(p2DynArray<Collider*>& nodes, const SDL_Rect& r) const
 	{
+		int counter = 0;
+
+		for (int i = 0; i < objects.Count(); i++)
+		{
+			nodes.PushBack(objects[i]);
+			counter++;
+		}
+
+		if (childs[0] != NULL)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (Intersects(childs[i]->rect, r))
+				{
+					counter += childs[i]->CollectCandidates(nodes, r);
+				}
+			}
+		}
+
+		return counter;
 		/*
 		Calcular a quin node es troba el rectangle r i afegirhi tots els colliders d'aquell node
 		*/
