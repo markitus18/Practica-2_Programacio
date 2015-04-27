@@ -36,11 +36,15 @@ namespace TreeTests
 			treeNode <char>* tres = myTree.Add('3');
 			treeNode <char>* quatre = myTree.Add('4');
 
-	//		myTree.Clear();
+			Assert::IsTrue(dos->data == '2');
+			Assert::IsTrue(tres->data == '3');
+			Assert::IsTrue(quatre->data == '4');
 
-	//		Assert::IsTrue(dos->data == '2');
-	//		Assert::IsTrue(tres == NULL);
-	//		Assert::IsTrue(quatre == NULL);
+			myTree.Clear();
+
+			Assert::IsTrue(dos->data != '2');
+			Assert::IsTrue(tres->data != '3');
+			Assert::IsTrue(quatre->data != '4');
 		}
 
 		TEST_METHOD(Preorder_Recursive)

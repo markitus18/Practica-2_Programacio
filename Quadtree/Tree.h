@@ -82,6 +82,23 @@ public:
 		return newNode;
 	}
 
+	void Clear(treeNode<DATA>* tmp = NULL)
+	{
+		if (tmp == NULL)
+			tmp = rootNode;
+
+		if (tmp != NULL)
+		{
+			for (int i = 0; i < tmp->children.NodeCounter(); i++)
+			{
+				Clear(tmp->children.GetPointer(i)->atr);
+			}
+
+			delete tmp;
+		}
+
+	}
+
 	//Cerca "Pre-Order: pares->fills"  F B A D C E G I H
 	//		"In-Order:	meitat fills->pare->meitat fill	A B C D E F G I H
 	//		"Post-Order: fills->pare"	A C E D B H I G F
