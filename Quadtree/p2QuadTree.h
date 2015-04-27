@@ -40,74 +40,86 @@ public:
 			if(childs[i] != NULL) delete childs[i];
 	}
 	 
+	void DivideNode(Collider* col)
+	{
+		SDL_Rect newChild{ rect.x, rect.y, rect.w / 2, rect.h / 2 };
+
+		childs[0] = new p2QuadTreeNode(newChild);
+		childs[0]->parent = this;
+
+		childs[1] = new p2QuadTreeNode(newChild);
+		childs[1]->rect.x += rect.w / 2;
+		childs[1]->parent = this;
+
+		childs[2] = new p2QuadTreeNode(newChild);
+		childs[2]->rect.y += rect.h / 2;
+		childs[2]->parent = this;
+
+		childs[3] = new p2QuadTreeNode(newChild);
+		childs[3]->rect.x += rect.w / 2;
+		childs[3]->rect.y += rect.h / 2;
+		childs[3]->parent = this;
+
+		p2DynArray<Collider*> tmp = objects;
+
+		objects.Clear();
+
+		for (int i = 0; i < tmp.Count(); i++)
+		{
+			Insert(tmp[i]);
+		}
+
+		Insert(col);
+	}
+
+	bool IntersectsMiddle (Collider* col)
+	{
+		int collisions = 0;
+		for (int i = 0; i < 4; i++)
+		{
+
+			if (Intersects(col->rect, childs[i]->rect))
+			{
+				collisions++;
+			}
+		}
+		if (collisions == 4)
+			return true;
+		return false;
+	}
+
 	void Insert(Collider* col)
 	{
 		//Check if the collider intersects with all 4 childs
 
 		if (childs[0] != NULL)
 		{
-			for (int i = 0; i < 4; i++)
+			if (IntersectsMiddle(col))
 			{
-				int collisions = 0;
-				if (Intersects(col->rect, childs[i]->rect))
-				{
-					collisions++;
-				}
-
-				if (collisions == 4)
-				{
 					objects.PushBack(col);
 					return;
-				}
-
 			}
 
-			for (int i = 0; i < 4; i++)
-			{
-				if (Intersects(col->rect, childs[i]->rect))
+			//else
+			//{
+				for (int i = 0; i < 4; i++)
 				{
-					childs[i]->Insert(col);
-				}
+					if (Intersects(col->rect, childs[i]->rect))
+					{
+						childs[i]->Insert(col);
+					}
 
-			}
+				}
+		//	}
+
 		}
 
 		if (childs[0] == NULL)
 		{
 			if (objects.Count()  >= QUADTREE_MAX_ITEMS)
 			{
-				
-				SDL_Rect newChild{ rect.x, rect.y, rect.w / 2, rect.h / 2 };
-
-				childs[0] = new p2QuadTreeNode(newChild);
-				childs[0]->parent = this;
-
-				childs[1] = new p2QuadTreeNode(newChild);
-				childs[1]->rect.x += rect.w / 2;
-				childs[1]->parent = this;
-
-				childs[2] = new p2QuadTreeNode(newChild);
-				childs[2]->rect.y += rect.h / 2;
-				childs[2]->parent = this;
-
-				childs[3] = new p2QuadTreeNode(newChild);
-				childs[3]->rect.x += rect.w / 2;
-				childs[3]->rect.y += rect.h / 2;
-				childs[3]->parent = this;
-
-				p2DynArray<Collider*> tmp = objects;
-
-				objects.Clear();
-
-				for (int i = 0; i < tmp.Count(); i++)
-				{
-					Insert(tmp[i]);
-				}
-
-				Insert(col);
-				
+				DivideNode(col);				
 			}
-
 			else
 				objects.PushBack(col);
 		}
@@ -150,7 +162,6 @@ public:
 		// de fer intersecció amb el rectangle r
 		// retornar el número de intersección calculades en el procés
 		// Nota: és una funció recursiva
-		return 0;
 	}
 
 	void CollectRects(p2DynArray<p2QuadTreeNode*>& nodes) 
