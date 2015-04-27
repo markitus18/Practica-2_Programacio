@@ -22,14 +22,14 @@ struct treeNode
 		data = _data;
 	}
 
-	void VisitAll_PreorderRecursive(DList<DATA>* list)
+	void VisitAll_PreorderRecursive(DList<DATA>* list) const
 	{
 		list->Add(data);
 		for (unsigned int i = 0; i < children.NodeCounter(); i++)
 			children.GetPointer(i)->atr->VisitAll_PreorderRecursive(list);
 	}
 
-	void VisitAll_PostorderRecursive(DList<DATA>* list)
+	void VisitAll_PostorderRecursive(DList<DATA>* list) const
 	{
 
 		for (unsigned int i = 0; i < children.NodeCounter(); i++)
@@ -37,7 +37,7 @@ struct treeNode
 		list->Add(data);
 	}
 
-	void VisitAll_InorderRecursive(DList<DATA>* list)
+	void VisitAll_InorderRecursive(DList<DATA>* list) const
 	{
 		for (unsigned int i = 0; i < children.NodeCounter() / 2; i++)
 			children.GetPointer(i)->atr->VisitAll_InorderRecursive(list);
