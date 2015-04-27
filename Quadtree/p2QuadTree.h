@@ -49,7 +49,7 @@ public:
 			for (int i = 0; i < 4; i++)
 			{
 				int collisions = 0;
-				if (col->CheckCollision(childs[i]->rect))
+				if (Intersects(col->rect, childs[i]->rect))
 				{
 					collisions++;
 				}
@@ -64,7 +64,7 @@ public:
 
 			for (int i = 0; i < 4; i++)
 			{
-				if (col->CheckCollision(childs[i]->rect))
+				if (Intersects(col->rect, childs[i]->rect))
 				{
 					childs[i]->Insert(col);
 				}
@@ -72,9 +72,13 @@ public:
 			}
 		}
 
-		else
+		if (childs[0] == NULL)
 		{
+			if (objects.Count()  >= QUADTREE_MAX_ITEMS)
+			{
+				
 				SDL_Rect newChild{ rect.x, rect.y, rect.w / 2, rect.h / 2 };
+
 				childs[0] = new p2QuadTreeNode(newChild);
 				childs[0]->parent = this;
 
@@ -92,6 +96,7 @@ public:
 				childs[3]->parent = this;
 
 				p2DynArray<Collider*> tmp = objects;
+
 				objects.Clear();
 
 				for (int i = 0; i < tmp.Count(); i++)
@@ -100,7 +105,12 @@ public:
 				}
 
 				Insert(col);
+				
 			}
+
+			else
+				objects.PushBack(col);
+		}
 
 		// TODO: Insertar un nou Collider al quadtree
 		// En principi cada node pot enmagatzemar QUADTREE_MAX_ITEMS nodes (encara que podrien ser més)
