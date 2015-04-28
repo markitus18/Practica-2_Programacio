@@ -109,6 +109,9 @@
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="p2QuadTree.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="CodeStyle.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

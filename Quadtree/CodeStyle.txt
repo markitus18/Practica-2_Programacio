@@ -1,0 +1,22 @@
+CodeStyle for Marc Garrigo on project "Practica2"
+
+camelCase
+PascalCase
+snake:case
+Hungarian Notation
+
+FileName:
+- Will use PascalCase
+- Example: Main.cpp
+
+Variables:
+- Will use camelCase
+- Example: movementSpeed
+
+Class Names:
+- Will use PascalCase
+- Example: Point
+
+Method Names:
+- Will use PamelCase
+- Example: IsZero()

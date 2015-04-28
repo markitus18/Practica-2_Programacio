@@ -22,28 +22,28 @@ struct treeNode
 		data = _data;
 	}
 
-	void VisitAll_PreorderRecursive(DList<DATA>* list) const
+	void PreorderRecursive(DList<DATA>* list) const
 	{
 		list->Add(data);
 		for (unsigned int i = 0; i < children.NodeCounter(); i++)
-			children.GetPointer(i)->atr->VisitAll_PreorderRecursive(list);
+			children.GetPointer(i)->atr->PreorderRecursive(list);
 	}
 
-	void VisitAll_PostorderRecursive(DList<DATA>* list) const
+	void PostorderRecursive(DList<DATA>* list) const
 	{
 
 		for (unsigned int i = 0; i < children.NodeCounter(); i++)
-			children.GetPointer(i)->atr->VisitAll_PostorderRecursive(list);
+			children.GetPointer(i)->atr->PostorderRecursive(list);
 		list->Add(data);
 	}
 
-	void VisitAll_InorderRecursive(DList<DATA>* list) const
+	void InorderRecursive(DList<DATA>* list) const
 	{
 		for (unsigned int i = 0; i < children.NodeCounter() / 2; i++)
-			children.GetPointer(i)->atr->VisitAll_InorderRecursive(list);
+			children.GetPointer(i)->atr->InorderRecursive(list);
 		list->Add(data);
 		for (unsigned int i = children.NodeCounter() / 2; i < (children.NodeCounter()); i++)
-			children.GetPointer(i)->atr->VisitAll_InorderRecursive(list);
+			children.GetPointer(i)->atr->InorderRecursive(list);
 	}
 };
 
@@ -106,17 +106,17 @@ public:
 	//Recursive functions
 	void PreorderRecursive(DList<DATA>* list) const
 	{
-		rootNode->VisitAll_PreorderRecursive(list);
+		rootNode->PreorderRecursive(list);
 	}
 
 	void PostorderRecursive(DList<DATA>* list) const
 	{
-		rootNode->VisitAll_PostorderRecursive(list);
+		rootNode->PostorderRecursive(list);
 	}
 
 	void InorderRecursive(DList<DATA>* list) const
 	{
-		rootNode->VisitAll_InorderRecursive(list);
+		rootNode->InorderRecursive(list);
 	}
 
 	//Iterative functions
