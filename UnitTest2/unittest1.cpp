@@ -65,7 +65,7 @@ namespace TreeTests
 			myTree.Add('a', four);
 
 			DList<char>* myList = new DList<char>;
-			myTree.PreorderRecursive(myList);
+			myTree.Tree_PreorderRecursive(myList);
 
 
 			Assert::AreEqual(myList->GetPointer(0)->atr, '1');
@@ -98,7 +98,7 @@ namespace TreeTests
 			myTree.Add('a', four);
 
 			DList<char>* myList = new DList<char>;
-			myTree.PreorderIterative(myList);
+			myTree.Tree_PreorderIterative(myList);
 
 
 			Assert::AreEqual(myList->GetPointer(0)->atr, '1');
@@ -131,7 +131,7 @@ namespace TreeTests
 			myTree.Add('a', four);
 
 			DList<char>* myList = new DList<char>;
-			myTree.InorderRecursive(myList);
+			myTree.Tree_InorderRecursive(myList);
 
 			Assert::AreEqual(myList->GetPointer(0)->atr, '5');
 			Assert::AreEqual(myList->GetPointer(1)->atr, '2');
@@ -163,7 +163,7 @@ namespace TreeTests
 			myTree.Add('a', four);
 
 			DList<char>* myList = new DList<char>;
-			myTree.InorderIterative(myList);
+			myTree.Tree_InorderIterative(myList);
 
 			Assert::AreEqual(myList->GetPointer(0)->atr, '5');
 			Assert::AreEqual(myList->GetPointer(1)->atr, '2');
@@ -195,7 +195,7 @@ namespace TreeTests
 			myTree.Add('a', four);
 
 			DList<char>* myList = new DList<char>;
-			myTree.PostorderRecursive(myList);
+			myTree.Tree_PostorderRecursive(myList);
 
 			Assert::AreEqual(myList->GetPointer(0)->atr, '5');
 			Assert::AreEqual(myList->GetPointer(1)->atr, '6');
@@ -227,7 +227,7 @@ namespace TreeTests
 			myTree.Add('a', four);
 
 			DList<char>* myList = new DList<char>;
-			myTree.PostorderIterative(myList);
+			myTree.Tree_PostorderIterative(myList);
 
 			Assert::AreEqual(myList->GetPointer(0)->atr, '5');
 			Assert::AreEqual(myList->GetPointer(1)->atr, '6');

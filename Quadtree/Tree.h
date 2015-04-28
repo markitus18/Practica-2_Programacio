@@ -22,28 +22,28 @@ struct treeNode
 		data = _data;
 	}
 
-	void PreorderRecursive(DList<DATA>* list) const
+	void Node_PreorderRecursive(DList<DATA>* list) const
 	{
 		list->Add(data);
 		for (unsigned int i = 0; i < children.NodeCounter(); i++)
 			children.GetPointer(i)->atr->PreorderRecursive(list);
 	}
 
-	void PostorderRecursive(DList<DATA>* list) const
+	void Node_PostorderRecursive(DList<DATA>* list) const
 	{
 
 		for (unsigned int i = 0; i < children.NodeCounter(); i++)
-			children.GetPointer(i)->atr->PostorderRecursive(list);
+			children.GetPointer(i)->atr->Node_PostorderRecursive(list);
 		list->Add(data);
 	}
 
-	void InorderRecursive(DList<DATA>* list) const
+	void Node_InorderRecursive(DList<DATA>* list) const
 	{
 		for (unsigned int i = 0; i < children.NodeCounter() / 2; i++)
-			children.GetPointer(i)->atr->InorderRecursive(list);
+			children.GetPointer(i)->atr->Node_InorderRecursive(list);
 		list->Add(data);
 		for (unsigned int i = children.NodeCounter() / 2; i < (children.NodeCounter()); i++)
-			children.GetPointer(i)->atr->InorderRecursive(list);
+			children.GetPointer(i)->atr->Node_InorderRecursive(list);
 	}
 };
 
@@ -104,23 +104,23 @@ public:
 	//		"Post-Order: fills->pare"	A C E D B H I G F
 
 	//Recursive functions
-	void PreorderRecursive(DList<DATA>* list) const
+	void Tree_PreorderRecursive(DList<DATA>* list) const
 	{
-		rootNode->PreorderRecursive(list);
+		rootNode->Node_PreorderRecursive(list);
 	}
 
-	void PostorderRecursive(DList<DATA>* list) const
+	void Tree_PostorderRecursive(DList<DATA>* list) const
 	{
-		rootNode->PostorderRecursive(list);
+		rootNode->Node_PostorderRecursive(list);
 	}
 
-	void InorderRecursive(DList<DATA>* list) const
+	void Tree_InorderRecursive(DList<DATA>* list) const
 	{
-		rootNode->InorderRecursive(list);
+		rootNode->Node_InorderRecursive(list);
 	}
 
 	//Iterative functions
-	void PreorderIterative(DList<DATA>* list) const
+	void Tree_PreorderIterative(DList<DATA>* list) const
 	{
 		Stack<treeNode<DATA>*> newStack;
 		treeNode<DATA>* newNode = rootNode;
@@ -135,7 +135,7 @@ public:
 		}
 	}
 
-	void PostorderIterative(DList<DATA>* list) const
+	void Tree_PostorderIterative(DList<DATA>* list) const
 	{
 		Stack<treeNode<DATA>*> primaryStack;
 		Stack<treeNode<DATA>*> auxiliarStack;
@@ -163,7 +163,7 @@ public:
 
 	}
 
-	void InorderIterative(DList<DATA>* list) const
+	void Tree_InorderIterative(DList<DATA>* list) const
 	{
 		Stack<treeNode<DATA>*> newStack;
 		treeNode<DATA>* newNode = rootNode;

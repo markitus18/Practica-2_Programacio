@@ -20,3 +20,6 @@ Class Names:
 Method Names:
 - Will use PamelCase
 - Example: IsZero()
+- In case there are two classes with the same method, will use an identifier
+	before the method name with an underscore between the identifier and the method name
+	- Example: Node_PreorderRecursive
